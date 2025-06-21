@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | Pynancia</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+</head>
+<body>
+    <main class="d-flex w-100 vh-100 justify-content-center align-items-center">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h4>CREATE ACCOUNT</h4>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <form>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">NAME</label>
+                        <input type="name" class="form-control" id="name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">EMAIL</label>
+                        <input type="email" class="form-control" id="email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone no" class="form-label">PHONE NO</label>
+                        <input type="phone no" class="form-control" id="phone no">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">PASSWORD</label>
+                        <input type="password" class="form-control" id="password">
+                        <i class="fa-solid fa-eye toggle-password position-absolute" id="togglePassword" style="top: 455px; right: 620px; cursor: pointer;"></i>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirm" class="form-label">CONFIRM PASSWORD</label>
+                        <input type="password" class="form-control" id="confirm">
+                        <i class="fa-solid fa-eye toggle-password position-absolute" id="togglePassword2" style="top: 541px; right: 620px; cursor: pointer;"></i>
+                    </div>
+                    <button type="submit" class="login-btn">Signup</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    
+</body>
+<script src="{% static 'js/script.js'%}"></script>
+<script>
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordInput = document.getElementById("password");
+
+    togglePassword.addEventListener("click", () => {
+        const type = passwordInput.type === "password" ? "text" : "password";
+        passwordInput.type = type;
+
+        // Toggle eye icon
+        togglePassword.classList.toggle("fa-eye");
+        togglePassword.classList.toggle("fa-eye-slash");
+    });
+    const togglePassword2 = document.getElementById("togglePassword2");
+    const confirmInput = document.getElementById("confirm");
+
+    togglePassword2.addEventListener("click", () => {
+        const type = passwordInput.type === "password" ? "text" : "password";
+        passwordInput.type = type;
+
+        // Toggle eye icon
+        togglePassword2.classList.toggle("fa-eye");
+        togglePassword2.classList.toggle("fa-eye-slash");
+    });
+</script>
+</html>

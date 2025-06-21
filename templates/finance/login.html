@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In | Pynancia</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+</head>
+<body>
+    <main class="d-flex w-100 vh-100 justify-content-center align-items-center">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h4>ACCOUNT LOGIN</h4>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <form >
+                    <div class="mb-3">
+                        <label for="username" class="form-label">USERNAME</label>
+                        <input type="username" class="form-control" id="username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">PASSWORD</label>
+                        <input type="password" class="form-control" id="password">
+                        <i class="fa-solid fa-eye toggle-password position-absolute" id="togglePassword" style="top: 404px; right: 620px; cursor: pointer;"></i>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <a href="" id="signup-link">No account?</a>
+                        </div>
+                        <div class="col">
+                            <a href="" id="f-pass">forgot password?</a>
+                        </div>
+                    </div>
+                    <button type="submit" class="login-btn">Login</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    
+</body>
+<script src="{% static 'js/script.js'%}"></script>
+<script>
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordInput = document.getElementById("password");
+
+    togglePassword.addEventListener("click", () => {
+        const type = passwordInput.type === "password" ? "text" : "password";
+        passwordInput.type = type;
+
+        // Toggle eye icon
+        togglePassword.classList.toggle("fa-eye");
+        togglePassword.classList.toggle("fa-eye-slash");
+    });
+</script>
+</html>

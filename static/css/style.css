@@ -1,0 +1,53 @@
+body{
+    padding:0;
+    margin:0;
+    background-color: rgba(235,235,235,255);
+}
+
+.container{
+    max-width:450px;
+    padding:30px 45px;
+    background-color: white;
+}
+
+.login-btn{
+    background-color:black;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 5px 20px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+#f-pass{
+
+    text-decoration: none;
+    color: #666;
+}
+
+#signup-link{
+    text-decoration: none;
+    color: #666;
+}
+
+.login-btn:focus {
+    color: #fff;
+    box-shadow: none;
+}
+
+.form-label{
+    color: #666;
+    font-size: small;
+}
+
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #555;
+  font-size: 18px;
+}
