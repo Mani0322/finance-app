@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+    {%load static%}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,7 +31,7 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <a href="" id="signup-link">No account?</a>
+                            <a href="{% url 'signup' %}" id="signup-link">No account?</a>
                         </div>
                         <div class="col">
                             <a href="" id="f-pass">forgot password?</a>

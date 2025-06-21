@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+    {%load static%}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
 </head>
 <body>
     <main class="d-flex w-100 vh-100 justify-content-center align-items-center">
+        <div id="message"></div>
         <div class="container">
             <div class="row">
                 <div class="col">
@@ -18,27 +20,27 @@
                 </div>
             </div>
             <div class="row mt-2">
-                <form>
+                <form id="registerForm">
                     <div class="mb-3">
                         <label for="name" class="form-label">NAME</label>
-                        <input type="name" class="form-control" id="name">
+                        <input type="name" class="form-control" name="name" id="name">
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">EMAIL</label>
-                        <input type="email" class="form-control" id="email">
+                        <input type="email" class="form-control" name="email" id="email">
                     </div>
                     <div class="mb-3">
                         <label for="phone no" class="form-label">PHONE NO</label>
-                        <input type="phone no" class="form-control" id="phone no">
+                        <input type="phone no" class="form-control" name="phone_no" id="phone no">
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">PASSWORD</label>
-                        <input type="password" class="form-control" id="password">
+                        <input type="password" class="form-control" name="password" id="password">
                         <i class="fa-solid fa-eye toggle-password position-absolute" id="togglePassword" style="top: 455px; right: 620px; cursor: pointer;"></i>
                     </div>
                     <div class="mb-3">
                         <label for="confirm" class="form-label">CONFIRM PASSWORD</label>
-                        <input type="password" class="form-control" id="confirm">
+                        <input type="password" class="form-control" name="confirm_password" id="confirm">
                         <i class="fa-solid fa-eye toggle-password position-absolute" id="togglePassword2" style="top: 541px; right: 620px; cursor: pointer;"></i>
                     </div>
                     <button type="submit" class="login-btn">Signup</button>
@@ -48,7 +50,7 @@
     </main>
     
 </body>
-<script src="{% static 'js/script.js'%}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js'%}"></script>
 <script>
     const togglePassword = document.getElementById("togglePassword");
     const passwordInput = document.getElementById("password");
@@ -72,5 +74,33 @@
         togglePassword2.classList.toggle("fa-eye");
         togglePassword2.classList.toggle("fa-eye-slash");
     });
+
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+
+        fetch('http://localhost:8000/finance/signup-form/', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (response.status == 201) {
+            window.location.href = '/finance/login/'; // ✅ redirect to login
+            } else {
+            return response.json().then(err => {
+                document.getElementById('message').innerText = JSON.stringify(err);
+            });
+            }
+        })
+        .catch(err => {
+            console.error('Fetch error:', err);
+        });
+    });
+
 </script>
 </html>
