@@ -4,12 +4,16 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializer import*
 from django.views.generic import TemplateView
+from django.contrib.auth.hashers import check_password
 
 # Create your views here.
 
 
-class LoginView(TemplateView):
+class Loginform(TemplateView):
     template_name='finance/login.html'
+
+
+
 
 class Registerationform(TemplateView):
     template_name = 'finance/signup.html'
@@ -19,7 +23,7 @@ class Registerationform(TemplateView):
 
 class RegisterView(APIView):
     def post(self, request):
-        serializer = RegistrationSerializers(data=request.data)
+        serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response({"message": "User registered successfully"}, status=status.HTTP_201_CREATED)

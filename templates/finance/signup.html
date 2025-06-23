@@ -12,7 +12,6 @@
 </head>
 <body>
     <main class="d-flex w-100 vh-100 justify-content-center align-items-center">
-        <div id="message"></div>
         <div class="container">
             <div class="row">
                 <div class="col">
@@ -21,27 +20,28 @@
             </div>
             <div class="row mt-2">
                 <form id="registerForm">
+                    {% csrf_token %}
                     <div class="mb-3">
-                        <label for="name" class="form-label">NAME</label>
-                        <input type="name" class="form-control" name="name" id="name">
+                        <label for="username" class="form-label">NAME</label>
+                        <input type="username" class="form-control" name="username" id="name">
+                        <div id="usernameError" class="text-danger" style="display: none;">Please enter your name.</div>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">EMAIL</label>
                         <input type="email" class="form-control" name="email" id="email">
-                    </div>
-                    <div class="mb-3">
-                        <label for="phone no" class="form-label">PHONE NO</label>
-                        <input type="phone no" class="form-control" name="phone_no" id="phone no">
+                        <div id="emailError" class="text-danger" style="display: none;">Please enter a valid email.</div>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">PASSWORD</label>
                         <input type="password" class="form-control" name="password" id="password">
-                        <i class="fa-solid fa-eye toggle-password position-absolute" id="togglePassword" style="top: 455px; right: 620px; cursor: pointer;"></i>
+                        <i class="fa-solid fa-eye toggle-password position-absolute" id="togglePassword" style="top: 415px; right: 620px; cursor: pointer;"></i>
+                        <div id="passwordError" class="text-danger" style="display: none;">Please enter a password.</div>
                     </div>
                     <div class="mb-3">
                         <label for="confirm" class="form-label">CONFIRM PASSWORD</label>
                         <input type="password" class="form-control" name="confirm_password" id="confirm">
-                        <i class="fa-solid fa-eye toggle-password position-absolute" id="togglePassword2" style="top: 541px; right: 620px; cursor: pointer;"></i>
+                        <i class="fa-solid fa-eye toggle-password position-absolute" id="togglePassword2" style="top: 500px; right: 620px; cursor: pointer;"></i>
+                        <div id="confirmPasswordError" class="text-danger" style="display: none;">Passwords do not match.</div>
                     </div>
                     <button type="submit" class="login-btn">Signup</button>
                 </form>
@@ -77,24 +77,58 @@
 
     document.getElementById('registerForm').addEventListener('submit', function(e) {
         e.preventDefault();
+        
+        // Clear previous error messages
+        document.getElementById('usernameError').style.display = 'none';
+        document.getElementById('emailError').style.display = 'none';
+        document.getElementById('passwordError').style.display = 'none';
+        document.getElementById('confirmPasswordError').style.display = 'none';
+
+        const username = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm').value;
+        
+        let valid = true;
+
+        // Client-side validation
+        if (!username) {
+            document.getElementById('usernameError').style.display = 'block';
+            valid = false;
+        }
+        if (!email) {
+            document.getElementById('emailError').style.display = 'block';
+            valid = false;
+        }
+        if (!password) {
+            document.getElementById('passwordError').style.display = 'block';
+            valid = false;
+        }
+        if (password !== confirmPassword) {
+            document.getElementById('confirmPasswordError').style.display = 'block';
+            valid = false;
+        }
+
+        // If validation fails, return
+        if (!valid) return;
 
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
 
-        fetch('http://localhost:8000/finance/signup-form/', {
+        fetch('/finance/signup-form/', {
             method: 'POST',
             headers: {
-            'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         })
         .then(response => {
             if (response.status == 201) {
-            window.location.href = '/finance/login/'; // ✅ redirect to login
+                window.location.href = '/finance/login/'; // ✅ redirect to login
             } else {
-            return response.json().then(err => {
-                document.getElementById('message').innerText = JSON.stringify(err);
-            });
+                return response.json().then(err => {
+                    document.getElementById('message').innerText = JSON.stringify(err);
+                });
             }
         })
         .catch(err => {
